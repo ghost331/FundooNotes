@@ -5,6 +5,7 @@ import dotenv from 'dotenv';
  * Middleware to authenticate if user has a valid Authorization token
  * Authorization: Bearer <token>
  *
+ * 
  * @param {Object} req
  * @param {Object} res
  * @param {Function} next
