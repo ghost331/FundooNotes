@@ -86,3 +86,35 @@ export const newNote = async (req, res, next) => {
       });
      }
   };
+  export const isarchieve=async(req,res,next)=>{
+    try {
+      const data = await noteservice.isarchieve(req.params._id);
+      res.status(HttpStatus.OK).json({
+        code: HttpStatus.OK,
+        data: data,
+        message: 'done'
+      });
+    }
+     catch (error) {
+      res.status(HttpStatus.BAD_REQUEST).json({
+        code: HttpStatus.BAD_REQUEST,
+        message: `${error}`
+      });
+     }
+  };
+  export const istrash=async(req,res,next)=>{
+    try {
+      const data = await noteservice.istrash(req.params._id);
+      res.status(HttpStatus.OK).json({
+        code: HttpStatus.OK,
+        data: data,
+        message: 'done'
+      });
+    }
+     catch (error) {
+      res.status(HttpStatus.BAD_REQUEST).json({
+        code: HttpStatus.BAD_REQUEST,
+        message: `${error}`
+      });
+     }
+  };

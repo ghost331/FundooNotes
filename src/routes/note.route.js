@@ -8,4 +8,6 @@ router.get('',userAuth,notecontroller.retriveAllNotes);
 router.get('/:_id',userAuth,notecontroller.retriveParticularNote);
 router.put('/:_id',userAuth,notecontroller.updateParticularNote);
 router.delete('/:_id',userAuth,notecontroller.deleteParticularNote);
+router.put('/isarchieve/:_id',userAuth,notecontroller.isarchieve);
+router.put('/istrash/:_id',userAuth,notecontroller.istrash);
 export default router;
