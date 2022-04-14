@@ -37,3 +37,53 @@ export const deleteParticularNote=async(_id)=>{
    await Note.findByIdAndDelete(_id);
    return '';   
 }
+export const isarchieve=async(id)=>{
+    
+    const temp=await Note.findById(id);
+    if(temp==null){
+        throw new Error("Note does not exist");
+    }
+    if(temp.isArchieve){
+    temp.isArchieve=false;
+    }
+    else{
+        temp.isArchieve=true;
+    }
+
+    const data=await Note.findByIdAndUpdate(
+        {
+            _id:id
+        },
+        temp,
+        {
+            new:true
+        }
+           
+    );
+    return data;
+}
+export const istrash=async(id)=>{
+    
+    const temp=await Note.findById(id);
+    if(temp==null){
+        throw new Error("Note does not exist");
+    }
+    if(temp.isTrash){
+    temp.isTrash=false;
+    }
+    else{
+        temp.isTrash=true;
+    }
+
+    const data=await Note.findByIdAndUpdate(
+        {
+            _id:id
+        },
+        temp,
+        {
+            new:true
+        }
+           
+    );
+    return data;
+}
