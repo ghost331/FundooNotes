@@ -2,6 +2,9 @@ import User from '../models/user.model';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import dotenv from 'dotenv';
+import { MailService } from '@sendgrid/mail';
+import {main} from '../utils/mailer';
+import { utils } from 'mocha';
 //get all users
 export const getAllUsers = async () => {
   const data = await User.find();
@@ -68,3 +71,15 @@ export const getUser = async (id) => {
   const data = await User.findById(id);
   return data;
 };
+
+export const forgetpassword=async(body)=>{
+  const data =await User.findOne({email:body.email});
+  if(data==null){
+    throw new Error("user does not exist");
+  }
+  else{
+    let token=jwt.sign({id:data._id,email:data.email},process.env.NEW_SECRET_KEY);
+    await main(data.email,token);
+    return token;
+  }
+}

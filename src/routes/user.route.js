@@ -8,6 +8,7 @@ const router = express.Router();
 //route to create a new user
 router.post('/register',newUserValidator, userController.newUser);
 router.post('/login', userController.login);
+router.post('/forget_password',userController.forgetpassword);
 
 
 

@@ -114,8 +114,26 @@ export const deleteUser = async (req, res, next) => {
       code: HttpStatus.OK,
       data: [],
       message: 'User deleted successfully'
-    });
+    }); 
+     
   } catch (error) {
     next(error);
   }
+};
+
+
+export const forgetpassword=async(req,res,next)=>{
+  try {
+    const data = await UserService.forgetpassword(req.body);
+    res.status(HttpStatus.CREATED).json({
+      code: HttpStatus.CREATED,
+      message: 'Message send successfully '
+    });
+  }
+   catch (error) {
+    res.status(HttpStatus.BAD_REQUEST).json({
+      code: HttpStatus.BAD_REQUEST,
+      message: `${error}`
+    });
+   }
 };
