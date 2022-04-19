@@ -31,8 +31,8 @@ export const newUser = async (body) => {
 };
 export const login=async(body)=>{
   const emailexist=await User.findOne({email:body.email});
+  console.log(emailexist);
   if(emailexist){
-  
   let match= await bcrypt.compare(body.password, emailexist.password) ;
   if(match){
     let token= jwt.sign({id:emailexist._id,email:emailexist.email},process.env.SECRET_KEY);
@@ -80,6 +80,14 @@ export const forgetpassword=async(body)=>{
   else{
     let token=jwt.sign({id:data._id,email:data.email},process.env.NEW_SECRET_KEY);
     await main(data.email,token);
-    return token;
+    return "message have been sent to respective mail";
   }
+}
+export const resetpassword=async (body)=>{
+  const saltRounds = 10;
+  const hashpassword=await bcrypt.hash(body.newpassword, saltRounds);
+  const data =await User.findOneAndUpdate({email:body.email},{password:hashpassword});
+  return data;
+
+
 }

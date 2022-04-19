@@ -137,3 +137,21 @@ export const forgetpassword=async(req,res,next)=>{
     });
    }
 };
+
+export const resetpassword=async(req,res,next)=>{
+  try{
+
+    const data =await UserService.resetpassword(req.body);
+    res.status(HttpStatus.CREATED).json({
+      code: HttpStatus.CREATED,
+      message: ' Password updated successfully'
+    });
+  }
+   catch (error) {
+    res.status(HttpStatus.BAD_REQUEST).json({
+      code: HttpStatus.BAD_REQUEST,
+      message: `${error}`
+    });
+   }
+
+  }
