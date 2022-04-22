@@ -68,6 +68,7 @@ export const newUser = async (req, res, next) => {
 export const login=async (req,res,next)=>{
   try{
     const data=await UserService.login(req.body);
+    console.log("login token",data);
     res.status(HttpStatus.OK).json({
       code: HttpStatus.OK,
       data:data,
@@ -119,3 +120,37 @@ export const deleteUser = async (req, res, next) => {
     next(error);
   }
 };
+
+export const forgetpassword=async(req,res,next)=>{
+  try {
+    const data = await UserService.forgetpassword(req.body);
+    res.status(HttpStatus.CREATED).json({
+      code: HttpStatus.CREATED,
+      message: 'Message send successfully '
+    });
+  }
+   catch (error) {
+    res.status(HttpStatus.BAD_REQUEST).json({
+      code: HttpStatus.BAD_REQUEST,
+      message: `${error}`
+    });
+   }
+};
+
+export const resetpassword=async(req,res,next)=>{
+  try{
+
+    const data =await UserService.resetpassword(req.body);
+    res.status(HttpStatus.CREATED).json({
+      code: HttpStatus.CREATED,
+      message: ' Password updated successfully'
+    });
+  }
+   catch (error) {
+    res.status(HttpStatus.BAD_REQUEST).json({
+      code: HttpStatus.BAD_REQUEST,
+      message: `${error}`
+    });
+   }
+
+  }
