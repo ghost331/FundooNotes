@@ -1,11 +1,13 @@
 import { expect } from 'chai';
 import request from 'supertest';
 import mongoose from 'mongoose';
+import HttpStatus from 'http-status-codes';
 
 import app from '../../src/index';
-
+let logintoken;
 describe('User APIs Test', () => {
   before((done) => {
+
     const clearCollections = () => {
       for (const collection in mongoose.connection.collections) {
         mongoose.connection.collections[collection].deleteOne(() => {});
@@ -26,16 +28,58 @@ describe('User APIs Test', () => {
     done();
   });
 
-  describe('GET /users', () => {
-    it('should return empty array', (done) => {
-      request(app)
-        .get('/api/v1/users')
-        .end((err, res) => {
-          expect(res.statusCode).to.be.equal(200);
-          expect(res.body.data).to.be.an('array');
+  describe('POST/register', () => {
+    it('given new user when added should return status 201', (done) => {
+       const userdetail={
+         firstname:"Ashish",
+         lastname:"saini",
+         email:"sainiashish123@gmail.com",
+         password:"ashish123"
+       };
+       request(app)
+       .post('/api/v1/users/register')
+       .send(userdetail)
+       .end((err,res)=>{
+         expect(res.statusCode).to.be.equal(HttpStatus.CREATED);
+         done();
+       })
 
-          done();
         });
+        it('given new user with bad credentials  ', (done) => {
+          const userdetail={
+            email:"sainiashish123@gmail.com",
+            password:"ashish123"
+          };
+          request(app)
+          .post('/api/v1/users/login')
+          .send(userdetail)
+          .end((err,res)=>{
+            logintoken=res.body.data;
+            expect(res.statusCode).to.be.equal(HttpStatus.OK);
+            done();
+          })
+         
+           });
+        
     });
+    describe('POST/', () => {
+      it('given new user and crerating its first note status 201', (done) => {
+         const notedetail={
+        title:"the funday",
+        description:"there is no fun",
+        color:"white"
+          
+         };
+         request(app)
+         .post('/api/v1/notes')
+         .send(notedetail)
+         .set('token',`${logintoken}`)
+         .end((err,res)=>{
+           expect(res.statusCode).to.be.equal(HttpStatus.CREATED);
+           done();
+         })
+         
+          });
+        })
+  
   });
-});
