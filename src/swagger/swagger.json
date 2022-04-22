@@ -1,0 +1,360 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "version": "V1",
+        "title": "Fundoo App",
+        "description": "This  a replica of google keep , In this we can  perform crud operation"
+    },
+    "host": "localhost:3000",
+    "basePath": "/api/v1/",
+    "tags": [
+        {
+            "name": "Fundoo App using Cli",
+            "description": "It is a replica of google keep"
+        }
+    ],
+    "schemes": [
+        "http"
+    ],
+    "consumes": [
+        "application/json"
+    ],
+    "produces": [
+        "application/json"
+    ],
+    "paths": {
+        "/users/register": {
+            "post": {
+                "tags": ["users"],
+                "description": "create name...",
+                "parameters": [
+                    {
+                        "name": "Create name",
+                        "in": "body",
+                        "description": "Create",
+                        "schema": {
+                            "$ref": "#/definitions/User"
+                        }
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "201": {
+                        "description": "New user is created"
+                    },
+                    "500": {
+                        "description": "Internal server error"
+                    }
+                }
+            }
+        },
+        "/users/login": {
+            "post": {
+                "tags": ["users"],
+                "description": "login name...",
+                "parameters": [
+                    {
+                        "name": "login user",
+                        "in": "body",
+                        "description": "login",
+                        "schema": {
+                            "$ref": "#/definitions/login"
+                        }
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "201": {
+                        "description": "New user is created"
+                    },
+                    "500": {
+                        "description": "Internal server error"
+                    }
+                }
+            }
+        },
+        "/users/forgetpassword": {
+            "post": {
+                "tags": ["users"],
+                "description": "email...",
+                "parameters": [
+                    {
+                        "name": "forget password",
+                        "in": "body",
+                        "description": "forgetpassword",
+                        "schema": {
+                            "$ref": "#/definitions/forgetpassword"
+                        }
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "201": {
+                        "description": "reset password link has been sent to its respective mail"
+                    },
+                    "500": {
+                        "description": "Internal server error"
+                    }
+                }
+            }
+        },
+        "/users/resetpassword": {
+            "post": {
+                "tags": ["users"],
+                "description": "email...",
+                "parameters": [
+                    {
+                        "name": "reset password",
+                        "in": "body",
+                        "description": "resetpassword",
+                        "schema": {
+                            "$ref": "#/definitions/forgetpassword"
+                        }
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "201": {
+                        "description": "your password is updated"
+                    },
+                    "500": {
+                        "description": "Internal server error"
+                    }
+                },
+                "security": [
+                    {
+                        "JWT": []
+                    }
+                ]
+            }
+        },
+        "/notes": {
+            "post": {
+                "tags": ["notes"],
+                "description": "create new note here",
+                "parameters": [
+                    {
+                        "name": "new notes",
+                        "in": "body",
+                        "description": "new notes",
+                        "schema": {
+                            "$ref": "#/definitions/newnote"
+                        }
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "201": {
+                        "description": "New Note is created"
+                    },
+                    "500": {
+                        "description": "Internal server error"
+                    }
+                },
+                "security": [
+                    {
+                        "JWT": []
+                    }
+                ]
+            },
+            "get": {
+                "tags": ["notes"],
+                "description": "Retrive all Notes of a particular user",
+                "parameters": [
+                    {
+                        "name": "Retrive All notes",
+                        "in": "body",
+                        "description": "All notes",
+                        "required": false
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "201": {
+                        "description": "All notes are retrived"
+                    },
+                    "500": {
+                        "description": "Internal server error"
+                    }
+                },
+                "security": [
+                    {
+                        "JWT": []
+                    }
+                ]
+            }
+        },
+        "/notes/{id}": {
+            "post": {
+                "tags": ["notes"],
+                "description": "Retrive a particluar  Note of a  user",
+                "parameters": [
+                    {
+                        "name": "Retrive Particular notes",
+                        "in": "path",
+                        "description": "Particular notes",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Particular note is retrived"
+                    },
+                    "500": {
+                        "description": "Internal server error"
+                    }
+                },
+                "security": [
+                    {
+                        "JWT": []
+                    }
+                ]
+            },
+            "get": {
+                "tags": ["notes"],
+                "description": "Update a particluar  Note of a  user",
+                "parameters": [
+                    {
+                        "name": "noteid",
+                        "in": "path",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "Update a Particular notes",
+                        "in": "body",
+                        "description": "Update a Particular  notes",
+                        "schema": {
+                            "$ref": "#/definitions/updatenote"
+                        }
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Particular note is updated"
+                    },
+                    "500": {
+                        "description": "Internal server error"
+                    }
+                },
+                "security": [
+                    {
+                        "JWT": []
+                    }
+                ]
+            }
+        },
+        "securityDefinitions": {
+            "JWT": {
+                "type": "apiKey",
+                "name": "token",
+                "in": "header"
+            }
+        },
+        "definitions": {
+            "User": {
+                "type": "object",
+                "properties": {
+                    "firstname": {
+                        "type": "string"
+                    },
+                    "lastname": {
+                        "type": "string"
+                    },
+                    "email": {
+                        "type": "string"
+                    },
+                    "password": {
+                        "type": "string"
+                    }
+                }
+            },
+            "login": {
+                "type": "object",
+                "properties": {
+                    "email": {
+                        "type": "string"
+                    },
+                    "password": {
+                        "type": "string"
+                    }
+                }
+            },
+            "forgetpassword": {
+                "type": "object",
+                "properties": {
+                    "email": {
+                        "type": "string"
+                    }
+                }
+            },
+            "resetpassword": {
+                "type": "object",
+                "properties": {
+                    "newpassword": {
+                        "type": "string"
+                    }
+                }
+            },
+            "newnote": {
+                "type": "object",
+                "properties": {
+                    "title": {
+                        "type": "string"
+                    },
+                    "description": {
+                        "type": "string"
+                    },
+                    "color": {
+                        "type": "string"
+                    },
+                    "isArchieve": {
+                        "type": "boolean"
+                    },
+                    "isTrash": {
+                        "type": "boolean"
+                    }
+                }
+            },
+            "updatenote": {
+                "type": "object",
+                "properties": {
+                    "title": {
+                        "type": "string"
+                    },
+                    "description": {
+                        "type": "string"
+                    },
+                    "color": {
+                        "type": "string"
+                    },
+                    "isArchieve": {
+                        "type": "boolean"
+                    },
+                    "isTrash": {
+                        "type": "boolean"
+                    }
+                }
+            }
+        }
+    }
+}
