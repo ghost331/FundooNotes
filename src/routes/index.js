@@ -16,6 +16,6 @@ const routes = () => {
   router.use('/notes',notesRoute);
 
   return router;
-};
+ };
 
 export default routes;

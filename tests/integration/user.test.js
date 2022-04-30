@@ -33,7 +33,7 @@ describe('User APIs Test', () => {
        const userdetail={
          firstname:"Ashish",
          lastname:"saini",
-         email:"sainiashish123@gmail.com",
+         email:"sainiashish12345@gmail.com",
          password:"ashish123"
        };
        request(app)
@@ -47,7 +47,7 @@ describe('User APIs Test', () => {
         });
         it('given new user with bad credentials  ', (done) => {
           const userdetail={
-            email:"sainiashish123@gmail.com",
+            email:"sainiashish12345@gmail.com",
             password:"ashish123"
           };
           request(app)
@@ -62,6 +62,21 @@ describe('User APIs Test', () => {
            });
         
     });
+    describe('Forget Password',()=>{
+    it('a user has forget his password and message had been sent to the respective mail',(done)=>{
+      const userdetail={
+        email:"sainiashish12345@gmail.com"
+      };
+      request(app)
+      .post('/api/v1/users/forgetpassword')
+      .send(userdetail)
+      .end((err,res)=>{
+        expect(res.statusCode).to.be.equal(HttpStatus.CREATED);
+        done();
+      })
+
+    });
+  });
     describe('POST/', () => {
       it('given new user and crerating its first note status 201', (done) => {
          const notedetail={
@@ -80,6 +95,16 @@ describe('User APIs Test', () => {
          })
          
           });
+          it('given user is fetching all the notes ', (done) => {
+            request(app)
+            .get('/api/v1/notes')
+            .set('token',`${logintoken}`)
+            .end((err,res)=>{
+              expect(res.statusCode).to.be.equal(HttpStatus.ACCEPTED);
+              done();
+            })
+            
+             });
         })
-  
+   
   });

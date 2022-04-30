@@ -5,6 +5,7 @@ import dotenv from 'dotenv';
 import { MailService } from '@sendgrid/mail';
 import {main} from '../utils/mailer';
 import { utils } from 'mocha';
+import {sender} from '../config/rabbitmq';
 //get all users
 export const getAllUsers = async () => {
   const data = await User.find();
@@ -26,6 +27,7 @@ export const newUser = async (body) => {
       // Store hash in your password DB.
    
   const data = await User.create(body);
+  sender(data);
   return data;
   }
 };
@@ -73,14 +75,15 @@ export const getUser = async (id) => {
 };
 
 export const forgetpassword=async(body)=>{
-  const data =await User.findOne({email:body.email});
+  const data =await User.findOne({email:body.email});  
+
+  console.log("inside the forget password",data);
   if(data==null){
     throw new Error("user does not exist");
   }
   else{
     let token=jwt.sign({id:data._id,email:data.email},process.env.NEW_SECRET_KEY);
     await main(data.email,token);
-    console.log(token);
     return "message have been sent to respective mail";
   }
 }

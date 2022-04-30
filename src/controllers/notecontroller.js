@@ -21,7 +21,7 @@ export const newNote = async (req, res, next) => {
 
   export const retriveAllNotes=async(req,res,next)=>{
     try {
-      const data = await noteservice.retriveAllNotes();
+      const data = await noteservice.retriveAllNotes(req.body);
       res.status(HttpStatus.ACCEPTED).json({
         code: HttpStatus.ACCEPTED,
         data: data,

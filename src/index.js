@@ -6,7 +6,7 @@ import cors from 'cors';
 import helmet from 'helmet';
 import swaggerUi from 'swagger-ui-express';
 import swaggerDocument from '../src/swagger/swagger.json';
-
+import clientRadis from './config/redis'
 import routes from './routes';
 import database from './config/database';
 import {
@@ -29,10 +29,11 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(morgan('combined', { stream: logStream }));
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+clientRadis();
 database();
 
 app.use(`/api/${api_version}`, routes());
-app.use(appErrorHandler);
+app.use(appErrorHandler); 
 app.use(genericErrorHandler);
 app.use(notFound);
 
